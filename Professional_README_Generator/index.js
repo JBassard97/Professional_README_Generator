@@ -452,53 +452,6 @@ function FinishInputs() {
 
 // CREATING README DOWN HERE
 
-// All of these if's COULD and COULDN'T exist, using conditionals to create readme content
-if (emptyReadme.tableOfContents) {
-  let ToCSection = ` 
-  ##Table of Contents:
-  ${emptyReadme.tableOfContents}
-  `;
-} else {
-  ToCSection = "";
-}
-if (emptyReadme.license) {
-  var licenseSection = `
-  ## License:
-  ${emptyReadme.license}
-  `;
-} else {
-  licenseSection = "";
-}
-if (emptyReadme.contributors) {
-  var contributorsSection = `
-  ## Contributors:
-  ${emptyReadme.contributors}
-  `;
-} else {
-  contributorsSection = "";
-}
-if (emptyReadme.tests) {
-  var testsSection = `
-  ## Tests:
-  ${emptyReadme.tests}
-  `;
-} else {
-  testsSection = "";
-}
-if (emptyReadme.questions) {
-  var questionsSection = `
-  ## Questions:
-  ${emptyReadme.questions}
-  `;
-} else {
-  questionsSection = "";
-}
-if (emptyReadme.screenshots) {
-  var screenshotsSection = `## Screenshots`;
-} else {
-  screenshotsSection = "";
-}
-
 function createREADME(emptyReadme) {
   var readmeStructure = `# ${emptyReadme.title}
 
@@ -516,22 +469,34 @@ ${emptyReadme.installation}
 ## Usage
 ${emptyReadme.usage}
 
-## License
-${emptyReadme.license}
+${emptyReadme.license ? "## License" : ""}
+${emptyReadme.license ? `${emptyReadme.license}` : ""}
 
-## Contributors
-${emptyReadme.contributors}
+${emptyReadme.contributors ? "## Contributors" : ""}
+${
+  emptyReadme.contributors
+    ? `${emptyReadme.contributors.map((item) => `- ${item}`).join("\n")}`
+    : ""
+}
 
-## Tests
-${emptyReadme.tests}
+${emptyReadme.tests ? "## Tests" : ""}
+${
+  emptyReadme.tests
+    ? `${emptyReadme.tests.map((item) => `- ${item}`).join("\n")}`
+    : ""
+}
 
 ${emptyReadme.questions ? "## Questions" : ""}
-${emptyReadme.questions ? `${emptyReadme.questions}` : ""}
+${
+  emptyReadme.questions
+    ? `${emptyReadme.questions.map((item) => `- ${item}`).join("\n")}`
+    : ""
+}
 
 ${emptyReadme.screenshots ? "## Screenshots" : ""}
 
 
 `;
-  console.log(readmeStructure);
+  // The final line that writes the README
   fs.writeFileSync("README.md", readmeStructure, "utf8");
 }
