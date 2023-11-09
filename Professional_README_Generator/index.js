@@ -8,7 +8,7 @@ const rl = readline.createInterface({
   output: process.stdout,
 });
 
-const emptyReadme = {};
+var emptyReadme = {};
 
 const ToCArray = [];
 
@@ -391,17 +391,23 @@ function NeedScreenshotsQuestion() {
 
 function YesScreenshotsQuestion() {
   ToCArray.push("Screenshots");
-  emptyReadme.tableOfContents = ToCArray;
+  emptyReadme.screenshots = true;
   FinishInputs();
 }
 
 function FinishInputs() {
-  console.log(`
-  Congrats, this finishes my line of questioning! Let's take a glimpse at what you've made:
-  
+  emptyReadme.tableOfContents = ToCArray;
+  console.log(
+    "Congrats, this finishes my line of questioning! Let's take a glimpse at what you've made:"
+  );
+
+  if (emptyReadme.tableOfContents) {
+    console.log(` 
   Table of Contents:
-  ${emptyReadme.tableOfContents}
-  
+  ${emptyReadme.tableOfContents}`);
+  }
+
+  console.log(`
   Title:
   ${emptyReadme.title}
   
@@ -432,6 +438,100 @@ function FinishInputs() {
   if (emptyReadme.questions) {
     console.log(`
   Questions:
-  ${emptyReadme.questions}`);
+  ${emptyReadme.questions}
+  `);
   }
+
+  console.log(
+    "Look! In the 'Explorer' your new README file is next to 'index.js'!"
+  );
+
+  console.log(emptyReadme);
+  createREADME(emptyReadme);
+}
+
+// CREATING README DOWN HERE
+
+// All of these if's COULD and COULDN'T exist, using conditionals to create readme content
+if (emptyReadme.tableOfContents) {
+  let ToCSection = ` 
+  ##Table of Contents:
+  ${emptyReadme.tableOfContents}
+  `;
+} else {
+  ToCSection = "";
+}
+if (emptyReadme.license) {
+  var licenseSection = `
+  ## License:
+  ${emptyReadme.license}
+  `;
+} else {
+  licenseSection = "";
+}
+if (emptyReadme.contributors) {
+  var contributorsSection = `
+  ## Contributors:
+  ${emptyReadme.contributors}
+  `;
+} else {
+  contributorsSection = "";
+}
+if (emptyReadme.tests) {
+  var testsSection = `
+  ## Tests:
+  ${emptyReadme.tests}
+  `;
+} else {
+  testsSection = "";
+}
+if (emptyReadme.questions) {
+  var questionsSection = `
+  ## Questions:
+  ${emptyReadme.questions}
+  `;
+} else {
+  questionsSection = "";
+}
+if (emptyReadme.screenshots) {
+  var screenshotsSection = `## Screenshots`;
+} else {
+  screenshotsSection = "";
+}
+
+function createREADME(emptyReadme) {
+  var readmeStructure = `# ${emptyReadme.title}
+
+## Table of Contents
+${emptyReadme.tableOfContents
+  .map((section) => `- [${section}](#${section.toLowerCase()})`)
+  .join("\n")}
+
+## Description
+${emptyReadme.description}
+
+## Installation
+${emptyReadme.installation}
+
+## Usage
+${emptyReadme.usage}
+
+## License
+${emptyReadme.license}
+
+## Contributors
+${emptyReadme.contributors}
+
+## Tests
+${emptyReadme.tests}
+
+${emptyReadme.questions ? "## Questions" : ""}
+${emptyReadme.questions ? `${emptyReadme.questions}` : ""}
+
+${emptyReadme.screenshots ? "## Screenshots" : ""}
+
+
+`;
+  console.log(readmeStructure);
+  fs.writeFileSync("README.md", readmeStructure, "utf8");
 }
