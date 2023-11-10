@@ -8,7 +8,7 @@ const rl = readline.createInterface({
   output: process.stdout,
 });
 
-var emptyReadme = {};
+const emptyReadme = {};
 
 const ToCArray = [];
 
@@ -28,8 +28,8 @@ function titleQuestion() {
       titleQuestion();
     } else {
       emptyReadme.title =
-        // Capitalizing first letter of Title for Professionalism
-        titleInput.charAt(0).toUpperCase() + titleInput.slice(1).toLowerCase();
+        // Making JUST first character UpperCase for Professionalism
+        titleInput.charAt(0).toUpperCase() + titleInput.slice(1);
       console.log(`${emptyReadme.title}? That's a good name!`);
       descriptionQuestion();
     }
@@ -104,17 +104,53 @@ function installQuestion() {
         installQuestion();
       } else {
         emptyReadme.installation =
-          // Capitalizing first letter of Title for Professionalism
-          instalInput.charAt(0).toUpperCase() +
-          instalInput.slice(1).toLowerCase();
+          instalInput.charAt(0).toUpperCase() + instalInput.slice(1);
         ToCArray.push("Installation");
         console.log(
           `${emptyReadme.installation}? Sounds like it'll work to me!`
         );
-        usageQuestion();
+        NeedLinkQuestion();
       }
     }
   );
+}
+
+function NeedLinkQuestion() {
+  rl.question(
+    "The next section will cover Usage. Would you like to add a link your project at the top of Usage? (Y or N)  ",
+    (needLinkInput) => {
+      needLinkInput.trim();
+      if (needLinkInput === "Y" || needLinkInput === "y") {
+        console.log(
+          "You've chosen to have a section for your project's Licenses"
+        );
+        YesLinkQuestion();
+      } else if (needLinkInput === "N" || needLinkInput === "n") {
+        console.log(
+          "You declined to link your project in your README! Moving on..."
+        );
+        usageQuestion();
+      } else {
+        console.log("Please only enter Y or N!");
+        NeedLinkQuestion();
+      }
+    }
+  );
+}
+
+function YesLinkQuestion() {
+  rl.question("Please enter the link to the project here: ", (linkInput) => {
+    linkInput.trim();
+    // If they answer nothing
+    if (linkInput === "") {
+      console.log("You can't enter nothing after opting to have this section!");
+      YesLinkQuestion();
+    } else {
+      emptyReadme.projectLink = linkInput;
+      console.log(`A link to your project will be included! Excellent choice!`);
+      usageQuestion();
+    }
+  });
 }
 
 function usageQuestion() {
@@ -130,9 +166,7 @@ function usageQuestion() {
         usageQuestion();
       } else {
         emptyReadme.usage =
-          // Capitalizing first letter of Usage for Professionalism
-          usageInput.charAt(0).toUpperCase() +
-          usageInput.slice(1).toLowerCase();
+          usageInput.charAt(0).toUpperCase() + usageInput.slice(1);
         ToCArray.push("Usage");
         console.log(`${emptyReadme.usage}? Easy enough to do!`);
         NeedLicenseQuestion();
@@ -148,7 +182,7 @@ function NeedLicenseQuestion() {
       needLicenseInput.trim();
       if (needLicenseInput === "Y" || needLicenseInput === "y") {
         console.log(
-          "You've chosen to have a section for your project's Licenses"
+          "You've chosen to have a section for your project's License"
         );
         YesLicenseQuestion();
       } else if (needLicenseInput === "N" || needLicenseInput === "n") {
@@ -165,27 +199,20 @@ function NeedLicenseQuestion() {
 }
 
 function YesLicenseQuestion() {
-  rl.question(
-    "Please enter any information regarding your licenses here: ",
-    (licenseInput) => {
-      licenseInput.trim();
-      // If they answer nothing
-      if (licenseInput === "") {
-        console.log(
-          "You can't enter nothing after opting to have this section!"
-        );
-        YesLicenseQuestion();
-      } else {
-        emptyReadme.license =
-          // Capitalizing first letter of License for Professionalism
-          licenseInput.charAt(0).toUpperCase() +
-          licenseInput.slice(1).toLowerCase();
-        ToCArray.push("License");
-        console.log(`${emptyReadme.license}? That's a good license to have!`);
-        NeedContributingQuestion();
-      }
+  rl.question("Please enter your project's license here: ", (licenseInput) => {
+    licenseInput.trim();
+    // If they answer nothing
+    if (licenseInput === "") {
+      console.log("You can't enter nothing after opting to have this section!");
+      YesLicenseQuestion();
+    } else {
+      emptyReadme.license =
+        licenseInput.charAt(0).toUpperCase() + licenseInput.slice(1);
+      ToCArray.push("License");
+      console.log(`${emptyReadme.license}? That's a good license to have!`);
+      NeedContributingQuestion();
     }
-  );
+  });
 }
 
 function NeedContributingQuestion() {
@@ -397,6 +424,8 @@ function YesScreenshotsQuestion() {
 
 function FinishInputs() {
   emptyReadme.tableOfContents = ToCArray;
+  // Closing questioning interface
+  rl.close();
   console.log(
     "Congrats, this finishes my line of questioning! Let's take a glimpse at what you've made:"
   );
@@ -442,18 +471,16 @@ function FinishInputs() {
   `);
   }
 
-  console.log(
-    "Look! In the 'Explorer' your new README file is next to 'index.js'!"
-  );
-
-  console.log(emptyReadme);
   createREADME(emptyReadme);
 }
 
 // CREATING README DOWN HERE
 
 function createREADME(emptyReadme) {
-  var readmeStructure = `# ${emptyReadme.title}
+  console.log(
+    "Look! In the 'Explorer' your new README file is next to 'index.js'!"
+  );
+  const readmeStructure = `# ${emptyReadme.title}
 
 ## Table of Contents
 ${emptyReadme.tableOfContents
@@ -467,6 +494,7 @@ ${emptyReadme.description}
 ${emptyReadme.installation}
 
 ## Usage
+${emptyReadme.projectLink ? `${emptyReadme.projectLink}\n` : ""}
 ${emptyReadme.usage}
 
 ${emptyReadme.license ? "## License" : ""}
@@ -497,6 +525,8 @@ ${emptyReadme.screenshots ? "## Screenshots" : ""}
 
 
 `;
+  // RegExp to remove excess vertical spacing before finally shipping it
+  const cleanedReadme = readmeStructure.replace(/^\s*[\r\n]/gm, "");
   // The final line that writes the README
-  fs.writeFileSync("README.md", readmeStructure, "utf8");
+  fs.writeFileSync("README.md", cleanedReadme, "utf8");
 }
