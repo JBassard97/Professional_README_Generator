@@ -430,56 +430,12 @@ function FinishInputs() {
     "Congrats, this finishes my line of questioning! Let's take a glimpse at what you've made:"
   );
 
-  if (emptyReadme.tableOfContents) {
-    console.log(` 
-  Table of Contents:
-  ${emptyReadme.tableOfContents}`);
-  }
-
-  console.log(`
-  Title:
-  ${emptyReadme.title}
-  
-  Description:
-  ${emptyReadme.description}
-  
-  Installation:
-  ${emptyReadme.installation}
-  
-  Usage:
-  ${emptyReadme.usage}
-  `);
-  if (emptyReadme.license) {
-    console.log(`
-  License:
-  ${emptyReadme.license}`);
-  }
-  if (emptyReadme.contributors) {
-    console.log(`
-  Contributors:
-  ${emptyReadme.contributors}`);
-  }
-  if (emptyReadme.tests) {
-    console.log(`
-  Tests:
-  ${emptyReadme.tests}`);
-  }
-  if (emptyReadme.questions) {
-    console.log(`
-  Questions:
-  ${emptyReadme.questions}
-  `);
-  }
-
   createREADME(emptyReadme);
 }
 
 // CREATING README DOWN HERE
 
 function createREADME(emptyReadme) {
-  console.log(
-    "Look! In the 'Explorer' your new README file is next to 'index.js'!"
-  );
   const readmeStructure = `# ${emptyReadme.title}
 
 ## Table of Contents
@@ -488,14 +444,16 @@ ${emptyReadme.tableOfContents
   .join("\n")}
 
 ## Description
-${emptyReadme.description}
+    ${emptyReadme.description}
 
 ## Installation
-${emptyReadme.installation}
+    ${emptyReadme.installation}
 
 ## Usage
-${emptyReadme.projectLink ? `${emptyReadme.projectLink}\n` : ""}
-${emptyReadme.usage}
+${
+  emptyReadme.projectLink ? `Link to project: ${emptyReadme.projectLink}\n` : ""
+}
+    ${emptyReadme.usage}
 
 ${emptyReadme.license ? "## License" : ""}
 ${emptyReadme.license ? `${emptyReadme.license}` : ""}
@@ -525,8 +483,15 @@ ${emptyReadme.screenshots ? "## Screenshots" : ""}
 
 
 `;
+
   // RegExp to remove excess vertical spacing before finally shipping it
   const cleanedReadme = readmeStructure.replace(/^\s*[\r\n]/gm, "");
+  console.log(cleanedReadme);
+
+  console.log(
+    "Look! In the 'Explorer' your new README file is next to 'index.js'!"
+  );
+
   // The final line that writes the README
   fs.writeFileSync("README.md", cleanedReadme, "utf8");
 }
