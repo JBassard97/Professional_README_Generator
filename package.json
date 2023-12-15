@@ -1,12 +1,12 @@
 {
   "dependencies": {
+    "jbassard97nodecolors": "^1.0.0",
     "node": "^21.2.0"
   },
   "name": "professional_readme_generator",
   "description": "## Table of Contents",
   "version": "1.0.0",
   "main": "index.js",
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index"

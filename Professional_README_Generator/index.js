@@ -8,32 +8,39 @@ const rl = readline.createInterface({
   output: process.stdout,
 });
 
+const colors = require("jbassard97nodecolors");
+
 const emptyReadme = {};
 
 const ToCArray = [];
 
 const greeting =
   "Welcome to my Professional README Generator! I'm going to ask you just a few simple questions about the project you need this for! At the end, a file will be created in this folder that you can copy to your own repository!";
-console.log(greeting);
+console.log(colors.MagentaText(greeting));
 // Get user inputs  Table of Contents, Installation, Usage, License, Contributing, Tests, and Questions
 
 titleQuestion();
 
 function titleQuestion() {
-  rl.question("What is the Title of your project? ", (titleInput) => {
-    titleInput.trim();
-    // If they answer nothing
-    if (titleInput === "") {
-      console.log("C'mon, every project needs a title!");
-      titleQuestion();
-    } else {
-      emptyReadme.title =
-        // Making JUST first character UpperCase for Professionalism
-        titleInput.charAt(0).toUpperCase() + titleInput.slice(1);
-      console.log(`${emptyReadme.title}? That's a good name!`);
-      descriptionQuestion();
+  rl.question(
+    `What is the ${colors.RainbowText("Title")} of your project? `,
+    (titleInput) => {
+      titleInput.trim();
+      // If they answer nothing
+      if (titleInput === "") {
+        console.log("C'mon, every project needs a title!");
+        titleQuestion();
+      } else {
+        emptyReadme.title =
+          // Making JUST first character UpperCase for Professionalism
+          titleInput.charAt(0).toUpperCase() + titleInput.slice(1);
+        console.log(
+          `${colors.BrightCyanText(emptyReadme.title)}? That's a good name!`
+        );
+        descriptionQuestion();
+      }
     }
-  });
+  );
 }
 
 function descriptionQuestion() {
@@ -50,9 +57,8 @@ function descriptionQuestion() {
       } else {
         emptyReadme.description =
           // Capitalizing first letter of Description for Professionalism
-          descriptionInput.charAt(0).toUpperCase() +
-          descriptionInput.slice(1);
-        console.log(`${emptyReadme.description}? That's a solid description!`);
+          descriptionInput.charAt(0).toUpperCase() + descriptionInput.slice(1);
+        console.log(`${colors.BrightGreenText("That's a solid description!")}`);
         NeedToCQuestion();
       }
     }
@@ -106,9 +112,7 @@ function installQuestion() {
         emptyReadme.installation =
           instalInput.charAt(0).toUpperCase() + instalInput.slice(1);
         ToCArray.push("Installation");
-        console.log(
-          `${emptyReadme.installation}? Sounds like it'll work to me!`
-        );
+        console.log(`Sounds like it'll work to me!`);
         NeedLinkQuestion();
       }
     }
