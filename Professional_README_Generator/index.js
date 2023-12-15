@@ -51,7 +51,7 @@ function descriptionQuestion() {
         emptyReadme.description =
           // Capitalizing first letter of Description for Professionalism
           descriptionInput.charAt(0).toUpperCase() +
-          descriptionInput.slice(1).toLowerCase();
+          descriptionInput.slice(1);
         console.log(`${emptyReadme.description}? That's a solid description!`);
         NeedToCQuestion();
       }
@@ -444,16 +444,19 @@ ${emptyReadme.tableOfContents
   .join("\n")}
 
 ## Description
-    ${emptyReadme.description}
+
+${emptyReadme.description}
 
 ## Installation
-    ${emptyReadme.installation}
+
+${emptyReadme.installation}
 
 ## Usage
 ${
   emptyReadme.projectLink ? `Link to project: ${emptyReadme.projectLink}\n` : ""
 }
-    ${emptyReadme.usage}
+
+${emptyReadme.usage}
 
 ${emptyReadme.license ? "## License" : ""}
 ${emptyReadme.license ? `${emptyReadme.license}` : ""}
