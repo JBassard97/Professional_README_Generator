@@ -26,7 +26,9 @@ After cloning this repo, you will see a folder titled "Professional_README_Gener
 [README Generator DEMO.webm](https://github.com/JBassard97/Professional_README_Generator/assets/142551579/e78b7ab7-fe75-442d-bf75-962f8f263647)
 
 
-<img width="708" alt="Screenshot 2023-11-11 233628" src="https://github.com/JBassard97/Professional_README_Generator/assets/142551579/bd7d1ff4-2919-48f0-b68a-483ba3c3e74d">
+
+<img width="880" alt="Screenshot 2023-12-16 203020" src="https://github.com/JBassard97/Professional_README_Generator/assets/142551579/e8c3688a-6d45-4d0d-a66e-696271eaf1c7">
+
 <img width="328" alt="Screenshot 2023-11-11 233750" src="https://github.com/JBassard97/Professional_README_Generator/assets/142551579/42bd3e59-4a2b-48a9-a489-417c8eb1a7f3">
 <img width="755" alt="Screenshot 2023-11-11 233941" src="https://github.com/JBassard97/Professional_README_Generator/assets/142551579/ae7ba87e-8b50-4e1f-9e32-e57c4fc25d73">
 
