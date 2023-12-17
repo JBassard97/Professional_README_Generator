@@ -16,7 +16,7 @@ const ToCArray = [];
 
 const greeting =
   "Welcome to my Professional README Generator! I'm going to ask you just a few simple questions about the project you need this for! At the end, a file will be created in this folder that you can copy to your own repository!";
-console.log(colors.MagentaText(greeting));
+console.log("\n", colors.MagentaText(greeting), "\n");
 // Get user inputs  Table of Contents, Installation, Usage, License, Contributing, Tests, and Questions
 
 titleQuestion();
@@ -28,14 +28,17 @@ function titleQuestion() {
       titleInput.trim();
       // If they answer nothing
       if (titleInput === "") {
-        console.log("C'mon, every project needs a title!");
+        console.log(
+          colors.BrightRedText("C'mon, every project needs a title!")
+        );
         titleQuestion();
       } else {
         emptyReadme.title =
           // Making JUST first character UpperCase for Professionalism
           titleInput.charAt(0).toUpperCase() + titleInput.slice(1);
         console.log(
-          `${colors.BrightCyanText(emptyReadme.title)}? That's a good name!`
+          `${colors.BrightCyanText(emptyReadme.title)}? That's a good name!`,
+          "\n"
         );
         descriptionQuestion();
       }
@@ -45,7 +48,7 @@ function titleQuestion() {
 
 function descriptionQuestion() {
   rl.question(
-    "What is the Description of your project? ",
+    `What is the ${colors.RainbowText("Description")} of your project? `,
     (descriptionInput) => {
       descriptionInput.trim();
       // If they answer nothing
@@ -58,7 +61,10 @@ function descriptionQuestion() {
         emptyReadme.description =
           // Capitalizing first letter of Description for Professionalism
           descriptionInput.charAt(0).toUpperCase() + descriptionInput.slice(1);
-        console.log(`${colors.BrightGreenText("That's a solid description!")}`);
+        console.log(
+          `${colors.BrightGreenText("That's a solid description!")}`,
+          "\n"
+        );
         NeedToCQuestion();
       }
     }
@@ -69,7 +75,9 @@ function descriptionQuestion() {
 // Do you even need one for this README?
 function NeedToCQuestion() {
   rl.question(
-    "Some projects aren't large enough to need a Table of Contents. Will your README require one? (Y or N)  ",
+    `Some projects aren't large enough to need a ${colors.RainbowText(
+      "Table of Contents"
+    )}. Will your README require one? (Y or N)  `,
     (needToCInput) => {
       needToCInput.trim();
       if (needToCInput === "Y" || needToCInput === "y") {
@@ -77,11 +85,14 @@ function NeedToCQuestion() {
         YesToCQuestion();
       } else if (needToCInput === "N" || needToCInput === "n") {
         console.log(
-          "You declined a Table of Contents for your README! Moving on..."
+          colors.RedText(
+            "You declined a Table of Contents for your README! Moving on..."
+          ),
+          "\n"
         );
         installQuestion();
       } else {
-        console.log("Please only enter Y or N!");
+        console.log(colors.BrightRedText("Please only enter Y or N!"));
         NeedToCQuestion();
       }
     }
@@ -93,26 +104,38 @@ function NeedToCQuestion() {
 function YesToCQuestion() {
   ToCArray.push("Title");
   ToCArray.push("Description");
-  console.log(`Here's what's currently in your Table of Contents: ${ToCArray}`);
+  console.log(
+    `${colors.BrightYellowText(
+      "Here's what's currently in your Table of Contents:"
+    )} ${ToCArray}`,
+    "\n"
+  );
   installQuestion();
 }
 
 function installQuestion() {
   rl.question(
-    "Briefly describe the Installation for your project:  ",
+    `Briefly describe the ${colors.RainbowText(
+      "Installation"
+    )} for your project:  `,
     (instalInput) => {
       instalInput.trim();
       // If they answer nothing
       if (instalInput === "") {
         console.log(
-          "It's HIGHLY recommended that you describe how your users will boot up your project!"
+          colors.BrightRedText(
+            "It's HIGHLY recommended that you describe how your users will boot up your project!"
+          )
         );
         installQuestion();
       } else {
         emptyReadme.installation =
           instalInput.charAt(0).toUpperCase() + instalInput.slice(1);
         ToCArray.push("Installation");
-        console.log(`Sounds like it'll work to me!`);
+        console.log(
+          colors.BrightCyanText(`Sounds like it'll work to me!`),
+          "\n"
+        );
         NeedLinkQuestion();
       }
     }
@@ -121,7 +144,9 @@ function installQuestion() {
 
 function NeedLinkQuestion() {
   rl.question(
-    "The next section will cover Usage. Would you like to add a link your project at the top of Usage? (Y or N)  ",
+    `The next section will cover Usage. Would you like to add a ${colors.RainbowText(
+      "Link"
+    )} your project at the top of Usage? (Y or N)  `,
     (needLinkInput) => {
       needLinkInput.trim();
       if (needLinkInput === "Y" || needLinkInput === "y") {
@@ -135,7 +160,7 @@ function NeedLinkQuestion() {
         );
         usageQuestion();
       } else {
-        console.log("Please only enter Y or N!");
+        console.log(colors.BrightRedText("Please only enter Y or N!"));
         NeedLinkQuestion();
       }
     }
@@ -147,11 +172,20 @@ function YesLinkQuestion() {
     linkInput.trim();
     // If they answer nothing
     if (linkInput === "") {
-      console.log("You can't enter nothing after opting to have this section!");
+      console.log(
+        colors.BrightRedText(
+          "You can't enter nothing after opting to have this section!"
+        )
+      );
       YesLinkQuestion();
     } else {
       emptyReadme.projectLink = linkInput;
-      console.log(`A link to your project will be included! Excellent choice!`);
+      console.log(
+        colors.BrightMagentaText(
+          `A link to your project will be included! Excellent choice!`
+        ),
+        "\n"
+      );
       usageQuestion();
     }
   });
@@ -159,20 +193,22 @@ function YesLinkQuestion() {
 
 function usageQuestion() {
   rl.question(
-    "Briefly describe the Usage for your project:  ",
+    `Briefly describe the ${colors.RainbowText("Usage")} for your project:  `,
     (usageInput) => {
       usageInput.trim();
       // If they answer nothing
       if (usageInput === "") {
         console.log(
-          "It's HIGHLY recommended that you cover the Usage of project!"
+          colors.BrightRedText(
+            "It's HIGHLY recommended that you cover the Usage of project!"
+          )
         );
         usageQuestion();
       } else {
         emptyReadme.usage =
           usageInput.charAt(0).toUpperCase() + usageInput.slice(1);
         ToCArray.push("Usage");
-        console.log(`${emptyReadme.usage}? Easy enough to do!`);
+        console.log(colors.BrightBlueText(`Easy enough to do!`), "\n");
         NeedLicenseQuestion();
       }
     }
@@ -181,7 +217,9 @@ function usageQuestion() {
 
 function NeedLicenseQuestion() {
   rl.question(
-    "Would you like to state your project's license? (Y or N)  ",
+    `Would you like to state your project's ${colors.RainbowText(
+      "License"
+    )}? (Y or N)  `,
     (needLicenseInput) => {
       needLicenseInput.trim();
       if (needLicenseInput === "Y" || needLicenseInput === "y") {
@@ -191,11 +229,13 @@ function NeedLicenseQuestion() {
         YesLicenseQuestion();
       } else if (needLicenseInput === "N" || needLicenseInput === "n") {
         console.log(
-          "You declined a License section for your README! Moving on..."
+          colors.RedText(
+            "You declined a License section for your README! Moving on..."
+          )
         );
         NeedContributingQuestion();
       } else {
-        console.log("Please only enter Y or N!");
+        console.log(colors.BrightRedText("Please only enter Y or N!"));
         NeedLicenseQuestion();
       }
     }
@@ -207,13 +247,22 @@ function YesLicenseQuestion() {
     licenseInput.trim();
     // If they answer nothing
     if (licenseInput === "") {
-      console.log("You can't enter nothing after opting to have this section!");
+      console.log(
+        `${colors.BrightRedText(
+          "You can't enter nothing after opting to have this section!"
+        )}`
+      );
       YesLicenseQuestion();
     } else {
       emptyReadme.license =
         licenseInput.charAt(0).toUpperCase() + licenseInput.slice(1);
       ToCArray.push("License");
-      console.log(`${emptyReadme.license}? That's a good license to have!`);
+      console.log(
+        colors.BrightGreenText(
+          `${emptyReadme.license}? That's a good license to have!`
+        ),
+        "\n"
+      );
       NeedContributingQuestion();
     }
   });
@@ -221,21 +270,27 @@ function YesLicenseQuestion() {
 
 function NeedContributingQuestion() {
   rl.question(
-    "Would you like to state your project's contributors (if any)? (Y or N)  ",
+    `Would you like to state your project's ${colors.RainbowText(
+      "Contributors"
+    )} (if any)? (Y or N)  `,
     (needContributeInput) => {
       needContributeInput.trim();
       if (needContributeInput === "Y" || needContributeInput === "y") {
         console.log(
-          "You've chosen to have a section for your project's Contributors"
+          colors.BrightBlueText(
+            "You've chosen to have a section for your project's Contributors"
+          )
         );
         YesContributingQuestion();
       } else if (needContributeInput === "N" || needContributeInput === "n") {
         console.log(
-          "You declined a Contributing section for your README! Moving on..."
+          colors.RedText(
+            "You declined a Contributing section for your README! Moving on..."
+          )
         );
         NeedTestsQuestion();
       } else {
-        console.log("Please only enter Y or N!");
+        console.log(colors.BrightRedText("Please only enter Y or N!"));
         NeedContributingQuestion();
       }
     }
@@ -257,8 +312,11 @@ function YesContributingQuestion() {
         emptyReadme.contributors = contributingArray;
         ToCArray.push("Contributors");
         console.log(
-          `Awesome! Here's your list of Contributors: 
+          colors.BrightCyanText(
+            `Awesome! Here's your list of Contributors: 
           ${emptyReadme.contributors}`
+          ),
+          "\n"
         );
         NeedTestsQuestion();
       } else if (
@@ -267,10 +325,14 @@ function YesContributingQuestion() {
         contributeInput !== "Done"
       ) {
         contributingArray.push(contributeInput);
-        console.log(`Here's what you've put so far: ${contributingArray}`);
+        console.log(
+          colors.BrightMagentaText(
+            `Here's what you've put so far: ${contributingArray}`
+          )
+        );
         YesContributingQuestion();
       } else {
-        console.log("You can't enter nothing!");
+        console.log(colors.BrightRedText("You can't enter nothing!"));
         console.log(`Here's what you've put so far: ${contributingArray}`);
         YesContributingQuestion();
       }
@@ -280,21 +342,28 @@ function YesContributingQuestion() {
 
 function NeedTestsQuestion() {
   rl.question(
-    "A 'tests' section is meant to guide new contributors through your project in a safe manner. Would you like to state any tests you've already run on your project? (Y or N)  ",
+    `A ${colors.RainbowText(
+      "Tests"
+    )} section is meant to guide new contributors through your project in a safe manner. Would you like to state any tests you've already run on your project? (Y or N)  `,
     (needTestsInput) => {
       needTestsInput.trim();
       if (needTestsInput === "Y" || needTestsInput === "y") {
         console.log(
-          "You've chosen to have a section to state your project's previously run tests!"
+          colors.BrightCyanText(
+            "You've chosen to have a section to state your project's previously run tests!"
+          )
         );
         YesTestsQuestion();
       } else if (needTestsInput === "N" || needTestsInput === "n") {
         console.log(
-          "You declined a Tests section for your README! Moving on..."
+          colors.RedText(
+            "You declined a Tests section for your README! Moving on..."
+          ),
+          "\n"
         );
         NeedQuestionQuestion();
       } else {
-        console.log("Please only enter Y or N!");
+        console.log(colors.BrightRedText("Please only enter Y or N!"));
         NeedTestsQuestion();
       }
     }
@@ -316,8 +385,9 @@ function YesTestsQuestion() {
         emptyReadme.tests = testsArray;
         ToCArray.push("Tests");
         console.log(
-          `Very nice! Here's your list of Tests: 
-          ${emptyReadme.tests}`
+          colors.BrightYellowText(`Very nice! Here's your list of Tests: 
+          ${emptyReadme.tests}`),
+          "\n"
         );
         NeedQuestionQuestion();
       } else if (
@@ -326,11 +396,19 @@ function YesTestsQuestion() {
         testsInput !== "Done"
       ) {
         testsArray.push(testsInput);
-        console.log(`Here's what you've put so far: ${testsArray}`);
+        console.log(
+          colors.BrightYellowText(
+            `Here's what you've put so far: ${testsArray}`
+          )
+        );
         YesTestsQuestion();
       } else {
-        console.log("You can't enter nothing!");
-        console.log(`Here's what you've put so far: ${testsArray}`);
+        console.log(colors.BrightRedText("You can't enter nothing!"));
+        console.log(
+          colors.BrightYellowText(
+            `Here's what you've put so far: ${testsArray}`
+          )
+        );
         YesTestsQuestion();
       }
     }
@@ -340,7 +418,9 @@ function YesTestsQuestion() {
 // Sorry for bad naming, but it works with the current convention so...
 function NeedQuestionQuestion() {
   rl.question(
-    "A 'Questions' section is meant to 'pass the microphone' to anyone looking to further your project. Would you like to state any questions you'd like future contributors to address? (Y or N)  ",
+    `A ${colors.RainbowText(
+      "Questions"
+    )} section is meant to 'pass the microphone' to anyone looking to further your project. Would you like to state any questions you'd like future contributors to address? (Y or N)  `,
     (needQuestionInput) => {
       needQuestionInput.trim();
       if (needQuestionInput === "Y" || needQuestionInput === "y") {
@@ -350,7 +430,10 @@ function NeedQuestionQuestion() {
         YesQuestionQuestion();
       } else if (needQuestionInput === "N" || needQuestionInput === "n") {
         console.log(
-          "You declined a Questions section for your README! Moving on..."
+          colors.RedText(
+            "You declined a Questions section for your README! Moving on..."
+          ),
+          "\n"
         );
         NeedScreenshotsQuestion();
       } else {
@@ -376,8 +459,9 @@ function YesQuestionQuestion() {
         emptyReadme.questions = questionsArray;
         ToCArray.push("Questions");
         console.log(
-          `Very nice! Here's your list of Questions: 
-          ${emptyReadme.questions}`
+          colors.BrightCyanText(`Very nice! Here's your list of Questions: 
+          ${emptyReadme.questions}`),
+          "\n"
         );
         NeedScreenshotsQuestion();
       } else if (
@@ -399,7 +483,9 @@ function YesQuestionQuestion() {
 
 function NeedScreenshotsQuestion() {
   rl.question(
-    "A 'Screenshots' section is a way to display the visual prowess of your project! You would need to add them in yourself, but would you like to include a section for them at the end of the README? (Y or N)  ",
+    `A ${colors.RainbowText(
+      "Screenshots"
+    )} section is a way to display the visual prowess of your project! You would need to add them in yourself, but would you like to include a section for them at the end of the README? (Y or N)  `,
     (needScreenshotsInput) => {
       needScreenshotsInput.trim();
       if (needScreenshotsInput === "Y" || needScreenshotsInput === "y") {
@@ -409,11 +495,14 @@ function NeedScreenshotsQuestion() {
         YesScreenshotsQuestion();
       } else if (needScreenshotsInput === "N" || needScreenshotsInput === "n") {
         console.log(
-          "You declined a Screenshots section for your README! Moving on..."
+          colors.RedText(
+            "You declined a Screenshots section for your README! Moving on..."
+          ),
+          "\n"
         );
         FinishInputs();
       } else {
-        console.log("Please only enter Y or N!");
+        console.log(colors.BrightRedText("Please only enter Y or N!"));
         NeedScreenshotsQuestion();
       }
     }
@@ -430,9 +519,6 @@ function FinishInputs() {
   emptyReadme.tableOfContents = ToCArray;
   // Closing questioning interface
   rl.close();
-  console.log(
-    "Congrats, this finishes my line of questioning! Let's take a glimpse at what you've made:"
-  );
 
   createREADME(emptyReadme);
 }
@@ -440,6 +526,7 @@ function FinishInputs() {
 // CREATING README DOWN HERE
 
 function createREADME(emptyReadme) {
+  console.clear();
   const readmeStructure = `# ${emptyReadme.title}
 
 ## Table of Contents
@@ -493,10 +580,18 @@ ${emptyReadme.screenshots ? "## Screenshots" : ""}
 
   // RegExp to remove excess vertical spacing before finally shipping it
   const cleanedReadme = readmeStructure.replace(/^\s*[\r\n]/gm, "");
-  console.log(cleanedReadme);
+  console.log(
+    "Congrats, this finishes my line of questioning! Let's take a glimpse at what you've made:",
+    "\n"
+  );
+
+  console.log(colors.GreenText(cleanedReadme), "\n");
 
   console.log(
-    "Look! In the 'Explorer' your new README file is next to 'index.js'!"
+    colors.RainbowText(
+      "Look! In the 'Explorer' your new README file is next to 'index.js'!"
+    ),
+    "\n"
   );
 
   // The final line that writes the README
